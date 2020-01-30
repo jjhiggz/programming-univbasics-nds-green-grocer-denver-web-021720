@@ -7,25 +7,32 @@ def find_item_by_name_in_collection(name, collection)
   # binding.pry
 
   while i < collection.length
-    binding.pry
+    #binding.pry
     if collection[i][:item] == name
-      a = collection[i][:item]
+      a = collection[i]
       end
       i=i+1
     end
-    a
+    return a
 end
-collection = [
-  { :item => "DOG FOOD" },
-  { :item => "WINE" },
-  { :item => "STRYCHNINE" }
-]
-name = "WINE"
-puts find_item_by_name_in_collection(name,collection)
 
 def consolidate_cart(cart)
   # Consult README for inputs and outputs
-  #
+
+  i=0
+  array =[]
+binding.pry
+  while i < cart.length
+    binding.pry
+    hash = {}
+    if array.include(cart[i][:item])
+      array[array.index(cart[i][:item])][:count]+=1
+    else
+      array[i] = {cart[i]}
+      array [i][:count] = 1
+    end
+  end
+
   # REMEMBER: This returns a new Array that represents the cart. Don't merely
   # change `cart` (i.e. mutate) it. It's easier to return a new thing.
 end
