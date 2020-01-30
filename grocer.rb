@@ -4,10 +4,10 @@ def find_item_by_name_in_collection(name, collection)
   # Implement me first!
   # Consult README for inputs and outputs]
    i = 0
-  # binding.pry
+
 
   while i < collection.length
-    #binding.pry
+
     if collection[i][:item] == name
       a = collection[i]
       end
@@ -21,10 +21,9 @@ def consolidate_cart(cart)
   i=0
   array =[]
   while i < cart.length
-    binding.pry
     if array.include?(cart[i]) #array.include?(cart[0][:item])
         hash=cart[i]
-        hash[:count]=1
+        hash[:count]=1exit
         aindex = array.index(cart[i])
         array[aindex][:count] += 1
     else
