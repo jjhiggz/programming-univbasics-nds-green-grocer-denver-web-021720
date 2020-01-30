@@ -1,15 +1,27 @@
+require "pry"
 
 def find_item_by_name_in_collection(name, collection)
   # Implement me first!
-  # Consult README for inputs and outputs
+  # Consult README for inputs and outputs]
    i = 0
+  # binding.pry
+
   while i < collection.length
-    if collection[i][name]
-      return collection[i][name]
-    else
-      return nil
-  end
+    binding.pry
+    if collection[i][:item] == name
+      a = collection[i][:item]
+      end
+      i=i+1
+    end
+    a
 end
+collection = [
+  { :item => "DOG FOOD" },
+  { :item => "WINE" },
+  { :item => "STRYCHNINE" }
+]
+name = "WINE"
+puts find_item_by_name_in_collection(name,collection)
 
 def consolidate_cart(cart)
   # Consult README for inputs and outputs
