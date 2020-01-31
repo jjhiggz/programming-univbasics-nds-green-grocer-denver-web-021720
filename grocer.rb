@@ -34,50 +34,54 @@ def consolidate_cart(cart)
   return array
 end
 
-cart = [{:item=>"AVOCADO", :price=>3.0, :clearance=>true},
- {:item=>"AVOCADO", :price=>3.0, :clearance=>true},
- {:item=>"KALE", :price=>3.0, :clearance=>false}]
-
-ccart = consolidate_cart(cart)
-
- vm = find_item_by_name_in_collection("AVOCADO",ccart)
- puts vm
-
 def apply_coupons(cart, coupons)
   # Consult README for inputs and outputs
-  j=0
-  discountedItems = []
-  array = cart
-      while j<coupons.length do
-          binding.pry
-        item = coupons[j][:item]
-        operator = find_item_by_name_in_collection(item,cart)
-        if find_item_by_name_in_collection(item,cart)
-          numPerCoupon=find_item_by_name_in_collection(item,coupons)[:num]
-          countPerCart = find_item_by_name_in_collection(item,cart)[:count]
-          costPerCoupon = find_item_by_name_in_collection(item,coupons)[:cost]
-          clearance = find_item_by_name_in_collection(item,cart)[:clearance]
-          times_used=countPerCart/numPerCoupon
-          updatedUnitPrice = costPerCoupon/numPerCoupon
-          if numPerCoupon/countPerCart>0
-            operator[:count]=operator[:count]-numPerCoupon*times_used
-
-            newTerm = {
-              :item => "#{item} W/COUPON",
-              :price => updatedUnitPrice,
-              :clearance => clearance,
-              :count => times_used*numPerCoupon
-              }
-            array << newTerm
-          end
-
-        #array[array.index(find_item_by_name_in_collection(item,cart))]
-
+    counter = 0
+  while counter < coupons.length
+    cart_item = find_item_by_name_in_collection(coupons[counter][:item],cart)
+    coupons_item_name = "#{coupons[counter][:item]} W/COUPON"
+    cart_item_with_coupon = find_item_by_name_in_collection(coupons_item_name,cart)
+      if cart_item && cart_item[:count]>= coupons[counter][:num]
+        if cart_item_with_coupon
+          cart_item_with_coupon[:count] += coupons[counter][:num]
+          cart_item[:count]-= coupons[counter][:num]
+        else
+          cart_item_with_coupon = {
+            :item => coupons_item_name,
+            :price => coupons[counter][:cost] / coupons[counter][:num],
+            :clearance => cart_item[:clearance],
+            :count => coupons[counter][:num]
+          }
+          cart <<cart_item_with_coupon
+          cart_item[:count] -= coupons[counter][:num]
         end
-      j+=1
-    # REMEMBER: This method **should** update cart
-     end
+      end
+    counter += 1
+  end
+  cart
 end
+
+items =[
+  {:item => "AVOCADO", :price => 3.00, :clearance => true},
+  {:item => "KALE", :price => 3.00, :clearance => false},
+  {:item => "BLACK_BEANS", :price => 2.50, :clearance => false},
+  {:item => "ALMONDS", :price => 9.00, :clearance => false},
+  {:item => "TEMPEH", :price => 3.00, :clearance => true},
+  {:item => "CHEESE", :price => 6.50, :clearance => false},
+  {:item => "BEER", :price => 13.00, :clearance => false},
+  {:item => "PEANUTBUTTER", :price => 3.00, :clearance => true},
+  {:item => "BEETS", :price => 2.50, :clearance => false},
+  {:item => "SOY MILK", :price => 4.50, :clearance => true},
+  {:item => "AVOCADO", :price => 3.00, :clearance => true}
+]
+ccart = consolidate_cart(items)
+coupons = [
+  {:item => "AVOCADO", :num => 2, :cost => 5.00},
+  {:item => "BEER", :num => 2, :cost => 20.00},
+  {:item => "CHEESE", :num => 3, :cost => 15.00}
+]
+puts apply_coupons(ccart, coupons)
+
 
 def apply_clearance(cart)
   # Consult README for inputs and outputs
