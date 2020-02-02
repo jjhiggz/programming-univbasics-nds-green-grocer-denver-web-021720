@@ -18,6 +18,7 @@ def consolidate_cart(cart)
   i=0
   array =[]
   while i < cart.length
+<<<<<<< HEAD
   #  binding.pry
     itemname=cart[i][:item]
     if find_item_by_name_in_collection(itemname,array)
@@ -25,14 +26,45 @@ def consolidate_cart(cart)
         #array[aindex][:count] += 1
         item = find_item_by_name_in_collection(itemname,array)
         item[:count] += 1
+=======
+    #binding.pry
+    if array.include?(cart[i]) #array.include?(cart[0][:item])
+        aindex = array.index(cart[i])
+        array[aindex][:count] += 1
+>>>>>>> 5497452c514841ed2c5eb5430b9f2b046b4e0933
     else
       cart[i][:count] = 1
       array << cart[i]
     end
     i=i+1
+<<<<<<< HEAD
   end
   return array
 end
+=======
+return array
+  end
+end
+
+items =   [
+    {:item => "AVOCADO", :price => 3.00, :clearance => true},
+    {:item => "KALE", :price => 3.00, :clearance => false},
+    {:item => "BLACK_BEANS", :price => 2.50, :clearance => false},
+    {:item => "ALMONDS", :price => 9.00, :clearance => false},
+    {:item => "TEMPEH", :price => 3.00, :clearance => true},
+    {:item => "CHEESE", :price => 6.50, :clearance => false},
+    {:item => "BEER", :price => 13.00, :clearance => false},
+    {:item => "PEANUTBUTTER", :price => 3.00, :clearance => true},
+    {:item => "BEETS", :price => 2.50, :clearance => false},
+    {:item => "SOY MILK", :price => 4.50, :clearance => true}
+  ]
+cart = [find_item_by_name_in_collection('TEMPEH', items), find_item_by_name_in_collection('PEANUTBUTTER', items), find_item_by_name_in_collection('ALMONDS', items)]
+  consolidated_cart = consolidate_cart(cart)
+  puts consolidated_cart
+  # REMEMBER: This returns a new Array that represents the cart. Don't merely
+  # change `cart` (i.e. mutate) it. It's easier to return a new thing.
+
+>>>>>>> 5497452c514841ed2c5eb5430b9f2b046b4e0933
 
 def apply_coupons(cart, coupons)
   # Consult README for inputs and outputs
